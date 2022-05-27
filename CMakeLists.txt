@@ -22,6 +22,12 @@ endif()
 set(CMAKE_CXX_STANDARD "20")
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(
+    NECALC_VERSION_STRING
+    "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}"
+)
+set(NECALC_ESCAPED_VERSION_STRING "\"${NECALC_VERSION_STRING}\"")
+
 # add custom dependencies directory
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/cmake/Modules/")
 
@@ -35,6 +41,8 @@ CPMFindPackage(
 )
 
 add_executable(necalc necalc.cpp)
+# pass in version of project as preprocessor definitions
+target_compile_definitions(necalc PRIVATE NECALC_VERSION_STRING=${NECALC_ESCAPED_VERSION_STRING})
 target_link_libraries(necalc PRIVATE Arby::arby)
 target_precompile_headers(
     necalc
