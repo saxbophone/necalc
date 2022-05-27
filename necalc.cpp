@@ -27,6 +27,8 @@ int main() {
                 parts.push_back(input);
             }
             // XXX: very basic processing loop for now
+            std::cout << "🧮⏳";
+            std::cout.flush();
             for (auto it = parts.begin(); it != parts.end(); ++it) {
                 // handle operators first then if none match, assume is number
                 if (*it == "+") {
@@ -51,7 +53,12 @@ int main() {
                     accumulator = arby::Nat(*it);
                 }
             }
-            std::cout << accumulator << std::endl;
+            std::cout << "\33[2K\r"; // erase previously printed line first
+            std::cout << "📝⏳";
+            std::cout.flush();
+            std::string output = (std::string)accumulator;
+            std::cout << "\33[2K\r"; // erase previously printed line first
+            std::cout << output << std::endl;
         }
         std::cout << "> ";
     } while (std::getline(std::cin, input));
