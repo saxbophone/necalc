@@ -5,6 +5,7 @@
 #include <vector>
 
 #include <arby/Nat.hpp>
+#include <arby/math.hpp>
 
 
 using namespace com::saxbophone;
@@ -21,10 +22,36 @@ int main() {
                 parts.push_back(input.substr(0, pos));
                 input.erase(0, pos + 1);
             }
-            for (auto part : parts) {
-                std::cout << part << ", ";
+            // tokeniser doesn't handle the last part, so add that if present
+            if (not input.empty()) {
+                parts.push_back(input);
             }
-            std::cout << std::endl;
+            // XXX: very basic processing loop for now
+            for (auto it = parts.begin(); it != parts.end(); ++it) {
+                // handle operators first then if none match, assume is number
+                if (*it == "+") {
+                    ++it;
+                    accumulator += arby::Nat(*it);
+                } else if (*it == "-") {
+                    ++it;
+                    accumulator -= arby::Nat(*it);
+                } else if (*it == "*") {
+                    ++it;
+                    accumulator *= arby::Nat(*it);
+                } else if (*it == "/") {
+                    ++it;
+                    accumulator /= arby::Nat(*it);
+                } else if (*it == "%") {
+                    ++it;
+                    accumulator %= arby::Nat(*it);
+                } else if (*it == "^") {
+                    ++it;
+                    accumulator = arby::pow(accumulator, arby::Nat(*it));
+                } else {
+                    accumulator = arby::Nat(*it);
+                }
+            }
+            std::cout << accumulator << std::endl;
         }
         std::cout << "> ";
     } while (std::getline(std::cin, input));
