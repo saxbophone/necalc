@@ -5,7 +5,6 @@
 #include <vector>
 
 #include <arby/Nat.hpp>
-#include <arby/math.hpp>
 
 
 using namespace com::saxbophone;
@@ -48,7 +47,7 @@ int main() {
                     accumulator %= arby::Nat(*it);
                 } else if (*it == "^") {
                     ++it;
-                    accumulator = arby::pow(accumulator, arby::Nat(*it));
+                    accumulator = arby::ipow(accumulator, (uintmax_t)arby::Nat(*it));
                 } else {
                     accumulator = arby::Nat(*it);
                 }

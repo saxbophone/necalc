@@ -37,7 +37,7 @@ include(CPM)
 CPMFindPackage(
     NAME Arby
     GIT_REPOSITORY https://github.com/saxbophone/arby.git
-    GIT_TAG v0.4.2
+    GIT_TAG josh/124-power-2-log-optimise
 )
 
 add_executable(necalc necalc.cpp)
@@ -49,3 +49,4 @@ target_precompile_headers(
         PRIVATE
             <arby/Nat.hpp>
 )
+set_property(TARGET necalc PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
